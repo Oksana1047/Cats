@@ -3,7 +3,7 @@ const $wr = document.querySelector('[data-wr]')
 
 const getCatHTML = (cat) => {
 	return `
-		<div class="card mb-4 mx-4" style="width: 18rem">
+		<div class="card mb-5 mx-4" style="width: 18rem">
 		<img src="${cat.image}" class="card-img-top" alt="${cat.name}" />
 		<div class="card-body">
 			<h5 class="card-title">${cat.name}</h5>
