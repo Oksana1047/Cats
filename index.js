@@ -135,21 +135,46 @@ const openModalHandler = (e) => {
 
 
 
+const $modalAboutWr = document.querySelector("[data-modalWr]");
+const $modalAboutContent = document.querySelector("[data-modalContent]");
+
+
+const openModalAboutHandler = (e) => {
+	if (e.target.dataset.action === ACTIONS.DETAIL) {
+		$modalAboutWr.classList.remove("hidden");
+		$modalAboutWr.addEventListener("click", clickModalWrHandler);
+		const $catWr = e.target.closest("[data-cat-id]");
+		const catId = $catWr.dataset.catId;
+		fetch(`https://cats.petiteweb.dev/api/single/Oksana1047/show/${catId}`)
+			.then((res) => res.json())
+			.then((cat) => {
+				$modalAboutContent.insertAdjacentHTML(
+					"afterbegin",
+					getCatHTML(cat)
+				);
+			});
+	}
+};
+
 
 
 
 document.addEventListener('click', openModalHandler)
-
+document.addEventListener("click", openModalAboutHandler);
 document.addEventListener('keydown', (e) => {
 	if (e.key === 'Escape') {
 		$modalWr.classList.add('hidden')
 		$modalWr.removeEventListener('click', clickModalWrHandler)
 		$modalContent.innerHTML = ''
+		$modalAboutWr.classList.add("hidden");
+		$modalAboutWr.removeEventListener("click", clickModalWrHandler);
+		$modalAboutContent.innerHTML = "";
 	}
 })
 
 
 
+/*
 $wr.addEventListener('click', (e) => {
 	if (e.target.dataset.action === ACTIONS.DETAIL) {
 
@@ -158,34 +183,4 @@ $wr.addEventListener('click', (e) => {
 
 	}
 })
-
-fetch(`https://cats.petiteweb.dev/api/single/Oksana1047/show/${catId}`).then((res) => {
-	if (res.status === 200) {
-
-		$modalWr.removeEventListener('click', clickModalWrHandler)
-
-		return $wr.insertAdjacentHTML(
-			'afterbegin',
-			getCatHTML(formDataObject),
-		)
-	}
-	throw Error('Ошибка')
-}).catch(alert)
-
-
-
-/*
-
-	.then((res) => res.json())
-	.then((data) => {
-		openModalHandler.insertAdjacentHTML(
-			'afterbegin',
-			data.map((cat) => getCatHTML(cat)).join(''),
-		)
-	})
-	/*if (res.status === 200) {
-return $catWr.remove()
-}
-alert(`Просмотр кота с id = ${catId} не удался`)*/
-
-
+*/
